@@ -229,8 +229,6 @@ int isLess(int x, int y) {
   y_sign = y>>31; 
   x_sign = x>>31;
   //compare signs
-  
-
   return 2;
 }
 /* 
@@ -241,7 +239,9 @@ int isLess(int x, int y) {
  *   Rating: 3
  */
 int isNonNegative(int x) {
-  return 2;
+  //get value of sign using first bit, if is neg return 0 if non neg 1
+  return!(x>>31);
+  //return 2;
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
