@@ -167,7 +167,7 @@ NOTES:
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  //not each of them then or them together, takea the not of this to get answer
+  //not each of them then or them together, take the not of this to get answer
   int k = ~x | ~y;
   return ~k;
 }
@@ -178,7 +178,12 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int tmax(void) {
-  return 2;
+  //return (pow(2,sizeof(int)-1) -1);
+  //int y;
+  //return ~y +1;
+  return 1 << 31;
+  //return 2;
+
 }
 // Rating: 2
 /* 
@@ -191,6 +196,12 @@ int tmax(void) {
  *  Rating: 2
  */
 int byteSwap(int x, int n, int m) {
+  int copy = x;
+  int first = x>>n;
+  int second = x<<m;
+
+
+
     return 2;
 }
 // Rating: 3
