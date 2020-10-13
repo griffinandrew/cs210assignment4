@@ -178,10 +178,8 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int tmax(void) {
-  //return (pow(2,sizeof(int)-1) -1);
-  //int y;
-  //return ~y +1;
-  return 1 << 31;
+//this returns the integer with the largest 2's complement
+  return ~(1 << 31);
   //return 2;
 
 }
@@ -226,6 +224,13 @@ int bitMask(int highbit, int lowbit) {
  *   Rating: 3
  */
 int isLess(int x, int y) {
+  //first check signs
+  int y_sign, x_sign;
+  y_sign = y>>31; 
+  x_sign = x>>31;
+  //compare signs
+  
+
   return 2;
 }
 /* 
