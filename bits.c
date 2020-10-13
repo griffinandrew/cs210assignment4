@@ -167,7 +167,9 @@ NOTES:
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  return 2;
+  //not each of them then or them together, takea the not of this to get answer
+  int k = ~x | ~y;
+  return ~k;
 }
 /* 
  * TMax - return maximum two's complement integer 
