@@ -195,12 +195,34 @@ int tmax(void) {
  */
 int byteSwap(int x, int n, int m) {
   int copy = x;
-  int first = x>>n;
-  int second = x<<m;
+  int first |=  x & (0x1<<n); //these should be just the corect values to swap
+  int second |= x & (0x1<<m); //all zeros but postion to swap
+
+
+  //change m to n postion using shift
+  first>>m;
+  second<<n;
+  one_to_insert = first & second; //combines the 2 swapped one to insert onto old byte
 
 
 
-    return 2;
+  //printf(&first);
+    //printf(&second);
+  //need to earse old ones and insert new one
+
+  x &= ~(x<<n | x<<m);  //clear bits
+  //clear bits
+
+  //insert bits 
+  x |= first | second;
+
+
+
+  
+  return x;
+
+
+    //return 2;
 }
 // Rating: 3
 /* 
