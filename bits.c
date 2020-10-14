@@ -194,33 +194,30 @@ int tmax(void) {
  *  Rating: 2
  */
 int byteSwap(int x, int n, int m) {
-  int copy = x;
-  int first |=  x & (0x1<<n); //these should be just the corect values to swap
-  int second |= x & (0x1<<m); //all zeros but postion to swap
 
+  int t = n<<3;
+  int j = m<<3;
+  int first =  x & (0xFF<<t); //these should be just the corect values to swap
+  int second = x & (0xFF<<j); //all zeros but postion to swap
+  //do i need to adjust for byte too?
 
-  //change m to n postion using shift
-  first>>m;
-  second<<n;
-  one_to_insert = first & second; //combines the 2 swapped one to insert onto old byte
+  //change m to n postion using shift (this is just shifting bits tho not bytes)
+  int k = first>>j; 
+  int y = second<<t;
+  int one_to_insert = k | y; //combines the 2 swapped one to insert onto old byte
 
-
-
-  //printf(&first);
-    //printf(&second);
+  printf("%d", &first);
+  printf("%d",&second);
   //need to earse old ones and insert new one
 
-  x &= ~(x<<n | x<<m);  //clear bits
-  //clear bits
+  x &= ~(x<<t | x<<j);  //clear bits
+  //clear bytes
 
-  //insert bits 
-  x |= first | second;
+  //insert bytes
+  x |= one_to_insert; // or can I add them in?
+ //x |= x + one_to_insert;
 
-
-
-  
   return x;
-
 
     //return 2;
 }
@@ -236,6 +233,8 @@ int byteSwap(int x, int n, int m) {
  *   Rating: 3
  */
 int bitMask(int highbit, int lowbit) {
+
+
   return 2;
 }
 /* 
@@ -287,3 +286,8 @@ int addOK(int x, int y) {
 int bitCount(int x) {
   return 2;
 }
+
+
+//int main(void){
+  //byteSwap(1,0,1);
+//}
