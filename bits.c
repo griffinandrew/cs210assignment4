@@ -233,7 +233,8 @@ int byteSwap(int x, int n, int m) {
  *   Rating: 3
  */
 int bitMask(int highbit, int lowbit) {
-
+  int ones = ~0x0;
+  
 
   return 2;
 }
