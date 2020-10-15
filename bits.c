@@ -206,8 +206,8 @@ int byteSwap(int x, int n, int m) {
   int y = second<<t;
   int one_to_insert = k | y; //combines the 2 swapped one to insert onto old byte
 
-  printf("%d", &first);
-  printf("%d",&second);
+  //printf("%d", &first);
+  //printf("%d",&second);
   //need to earse old ones and insert new one
 
   x &= ~(x<<t | x<<j);  //clear bits
@@ -286,8 +286,3 @@ int addOK(int x, int y) {
 int bitCount(int x) {
   return 2;
 }
-
-
-//int main(void){
-  //byteSwap(1,0,1);
-//}
