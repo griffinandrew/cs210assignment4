@@ -194,30 +194,41 @@ int tmax(void) {
  *  Rating: 2
  */
 int byteSwap(int x, int n, int m) {
-
-  int t = n<<3;
+  printf("0x%02X x\n", &x);
+  printf("%x n\n", &n);
+  printf("%x m\n", &m);
+  int t = n<<3; //shifting by bytes
   int j = m<<3;
-  int first =  x & (0xFF<<t); //these should be just the corect values to swap
+  printf("0x%02X og shift of n\n", &t);
+  printf("0x%02X og shift of m \n", &j);
+
+  int first =  x & (0xFF<<t); //these should be just the corect values to swap 
   int second = x & (0xFF<<j); //all zeros but postion to swap
+  printf("0x%02X shifing to pos n\n", &first);
+  printf("0x%02X shift to pos m\n",&second);
+
   //do i need to adjust for byte too?
+  int n_iso = 0xFF & first>>t; //getting the specific bit 
+  int m_iso = 0xFF & second>>j;
+  printf("0x%02X n iso\n", &n_iso);
+  printf("0x%02X m iso\n",&m_iso);
 
   //change m to n postion using shift (this is just shifting bits tho not bytes)
-  int k = first>>j; 
-  int y = second<<t;
-  int one_to_insert = k | y; //combines the 2 swapped one to insert onto old byte
+  //int k = n_iso>>j; 
+  //int y = m_iso<<t;
 
-  //printf("%d", &first);
-  //printf("%d",&second);
-  //need to earse old ones and insert new one
-
-  x &= ~(x<<t | x<<j);  //clear bits
+  int one_to_insert = n_iso | m_iso; //combines the 2 swapped one to insert onto old byte
+  int others = x & ~one_to_insert; //leftovers
+  int k = n_iso<<t; 
+  int y = m_iso<<j;
+ // x &= ~(x<<t | x<<j);  //clear bits
   //clear bytes
 
   //insert bytes
-  x |= one_to_insert; // or can I add them in?
+ // x |= one_to_insert; // or can I add them in?
  //x |= x + one_to_insert;
 
-  return x;
+  return (k | others | y);
 
     //return 2;
 }
@@ -234,7 +245,7 @@ int byteSwap(int x, int n, int m) {
  */
 int bitMask(int highbit, int lowbit) {
   int ones = ~0x0;
-  
+
 
   return 2;
 }
@@ -251,6 +262,7 @@ int isLess(int x, int y) {
   y_sign = y>>31; 
   x_sign = x>>31;
   //compare signs
+  
   return 2;
 }
 /* 
