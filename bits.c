@@ -256,11 +256,21 @@ int byteSwap(int x, int n, int m) {
  *   Rating: 3
  */
 int bitMask(int highbit, int lowbit) {
+ // highbit = 1;
+  //lowbit = 3; 
   int ones = ~0x0;
-  one_to_highbit = (s << highbit)+ones;
-  printf("0x%02X ones to hgih", ones_to_highit);
+  printf("%d high \n",highbit);
+  printf("%d low \n",lowbit);
+
+  int one_to_highbit = (2 << highbit) +ones;
+  int one_tolowbit = (1<<lowbit)+ones;
 
 
+    printf("0x%02X ones to high\n", one_to_highbit);
+    printf("0x%02X ones to low\n", one_tolowbit);
+  int y = one_to_highbit & ~one_tolowbit;
+  printf("0x%02X y\n", y);
+  return y;
 
   //return 2;
 }
