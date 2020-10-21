@@ -194,33 +194,45 @@ int tmax(void) {
  *  Rating: 2
  */
 int byteSwap(int x, int n, int m) {
-  printf("0x%02X x\n", &x);
-  printf("%x n\n", &n);
-  printf("%x m\n", &m);
+ // x = 0xAABBCCDD;
+//  n = 3;
+ // m = 0;
+  printf("0x%02X x\n", x);
+  printf("%x n\n", n);
+  printf("%x m\n", m);
   int t = n<<3; //shifting by bytes
   int j = m<<3;
-  printf("0x%02X og shift of n\n", &t);
-  printf("0x%02X og shift of m \n", &j);
+  printf("0x%02X og shift of n\n", t);
+  printf("0x%02X og shift of m \n", j);
 
   int first =  x & (0xFF<<t); //these should be just the corect values to swap 
   int second = x & (0xFF<<j); //all zeros but postion to swap
-  printf("0x%02X shifing to pos n\n", &first);
-  printf("0x%02X shift to pos m\n",&second);
+  printf("0x%02X shifing to pos n\n", first);
+  printf("0x%02X shift to pos m\n", second);
 
   //do i need to adjust for byte too?
-  int n_iso = 0xFF & first>>t; //getting the specific bit 
-  int m_iso = 0xFF & second>>j;
-  printf("0x%02X n iso\n", &n_iso);
-  printf("0x%02X m iso\n",&m_iso);
+  int n_iso = 0xFF & (first>>t); //getting the specific bit 
+  int m_iso = 0xFF & (second>>j);
+  printf("0x%02X n iso\n", n_iso);
+  printf("0x%02X m iso\n", m_iso);
 
   //change m to n postion using shift (this is just shifting bits tho not bytes)
   //int k = n_iso>>j; 
   //int y = m_iso<<t;
-
-  int one_to_insert = n_iso | m_iso; //combines the 2 swapped one to insert onto old byte
-  int others = x & ~one_to_insert; //leftovers
   int k = n_iso<<t; 
   int y = m_iso<<j;
+  int one_to_clean = k | y; //combines the 2 swapped one to insert onto old byte
+  int others = x & ~one_to_clean; //leftovers
+  int newpos_1 = n_iso<<j; 
+  int newpos_2 = m_iso<<t;
+  int one_to_insert = newpos_1 | newpos_2;
+
+
+  printf("0x%02X others\n", others);
+  printf("0x%02X x \n", x);
+  printf("0x%02X onetoinsert\n", one_to_insert);
+  printf("0x%02X ~onetoinsert\n", ~one_to_insert);
+
  // x &= ~(x<<t | x<<j);  //clear bits
   //clear bytes
 
@@ -228,7 +240,7 @@ int byteSwap(int x, int n, int m) {
  // x |= one_to_insert; // or can I add them in?
  //x |= x + one_to_insert;
 
-  return (k | others | y);
+  return (others | one_to_insert);
 
     //return 2;
 }
@@ -245,9 +257,12 @@ int byteSwap(int x, int n, int m) {
  */
 int bitMask(int highbit, int lowbit) {
   int ones = ~0x0;
+  one_to_highbit = (s << highbit)+ones;
+  printf("0x%02X ones to hgih", ones_to_highit);
 
 
-  return 2;
+
+  //return 2;
 }
 /* 
  * isLess - if x < y  then return 1, else return 0 
@@ -262,6 +277,9 @@ int isLess(int x, int y) {
   y_sign = y>>31; 
   x_sign = x>>31;
   //compare signs
+
+  
+
   
   return 2;
 }
@@ -286,6 +304,12 @@ int isNonNegative(int x) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
+  int y_sign, x_sign;
+  y_sign = y>>31; 
+  x_sign = x>>31;
+  //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow 
+  
+  
   return 2;
 }
 // Rating: 4
