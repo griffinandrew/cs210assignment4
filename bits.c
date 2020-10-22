@@ -14,6 +14,8 @@
  */
 
 #if 0
+include <stdio.h>
+
 /*
  * Instructions to Students:
  *
@@ -304,8 +306,8 @@ int isNonNegative(int x) {
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
- *   Example: addOK(0x80000000,0x80000000) = 0,
- *            addOK(0x80000000,0x70000000) = 1, 
+ *   Example: addOK(0x80000000,0x80000000) = 0, //can be 
+ *            addOK(0x80000000,0x70000000) = 1, //cant be
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 20
  *   Rating: 3
@@ -318,14 +320,21 @@ int addOK(int x, int y) {
   printf("0x%02X y sign\n", y_sign);
   printf("0x%02X x sign\n", x_sign);
   //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow 
-  int check = x+y;
-  
-    printf("0x%02X check\n", check);
-  int check_sign = check >>31;
+  int check = x+y; //see if overflow results 
+
+  printf("0x%02X check\n", check);
+  int check_sign = check >>31; //get sign of the overflow to see if it matches
   printf("0x%02X check sign\n", check_sign);
 
+  int same_or_not = (y_sign ^ x_sign); //1 if diff 0 if same checking if same or not was xor changd to reg or
+  printf("0x%02X same or not\n", same_or_not);
+  int x_check =  (x_sign ^ check_sign);  //checking to see if different sign for x and sum
+  
+  //too many conditionals would need to be if same then else maybe use conditional from discusson?
 
-  return (x_sign & check_sign) | (y_sign & check_sign);
+
+
+  return !(~x_check & same_or_not);
 
 //if check sign is 0 while other are 1 and 1 return false 
 
