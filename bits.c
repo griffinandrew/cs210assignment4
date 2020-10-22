@@ -265,7 +265,6 @@ int bitMask(int highbit, int lowbit) {
   int one_to_highbit = (2 << highbit) +ones;
   int one_tolowbit = (1<<lowbit)+ones;
 
-
     printf("0x%02X ones to high\n", one_to_highbit);
     printf("0x%02X ones to low\n", one_tolowbit);
   int y = one_to_highbit & ~one_tolowbit;
@@ -287,8 +286,6 @@ int isLess(int x, int y) {
   y_sign = y>>31; 
   x_sign = x>>31;
   //compare signs
-
-  
 
   
   return 2;
@@ -317,10 +314,23 @@ int addOK(int x, int y) {
   int y_sign, x_sign;
   y_sign = y>>31; 
   x_sign = x>>31;
+  
+  printf("0x%02X y sign\n", y_sign);
+  printf("0x%02X x sign\n", x_sign);
   //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow 
+  int check = x+y;
   
+    printf("0x%02X check\n", check);
+  int check_sign = check >>31;
+  printf("0x%02X check sign\n", check_sign);
+
+
+  return (x_sign & check_sign) | (y_sign & check_sign);
+
+//if check sign is 0 while other are 1 and 1 return false 
+
   
-  return 2;
+  //return 2;
 }
 // Rating: 4
 /*
