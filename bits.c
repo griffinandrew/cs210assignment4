@@ -1,7 +1,7 @@
 /* 
  * CS:APP Data Lab 
  * 
- * <Please put your name and userid here>
+ * <Griffin Heyrich U42992446>
  * 
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
@@ -288,7 +288,7 @@ int isLess(int x, int y) {
   y_sign = y>>31; 
   x_sign = x>>31;
   //compare signs
-
+  int same_or_not = (y_sign ^ x_sign); //1 if diff 0 if same 
   
   return 2;
 }
@@ -306,8 +306,8 @@ int isNonNegative(int x) {
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
- *   Example: addOK(0x80000000,0x80000000) = 0, //can be 
- *            addOK(0x80000000,0x70000000) = 1, //cant be
+ *   Example: addOK(0x80000000,0x80000000) = 0, //can't be 
+ *            addOK(0x80000000,0x70000000) = 1, //can be
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 20
  *   Rating: 3
@@ -328,12 +328,19 @@ int addOK(int x, int y) {
 
   int same_or_not = (y_sign ^ x_sign); //1 if diff 0 if same checking if same or not was xor changd to reg or
   printf("0x%02X same or not\n", same_or_not);
+
+  //need to use same or not to determine what to check 
+
   int x_check =  (x_sign ^ check_sign);  //checking to see if different sign for x and sum
   
   //too many conditionals would need to be if same then else maybe use conditional from discusson?
 
+// i think that the error must be araising from x check, maybe in the cases where the signs r different it doesnt make sense to compare it to result sign
 
-
+//^ im pretty sure this is the error when they are diffenent comparing it to the overflow one is a guessing game
+//i think i need 2 conditionals one for when signs are the same and other for when they are different
+//maybe something like
+//
   return !(~x_check & same_or_not);
 
 //if check sign is 0 while other are 1 and 1 return false 
