@@ -315,15 +315,21 @@ int isNonNegative(int x) {
 int addOK(int x, int y) {
   int y_sign, x_sign;
   y_sign = y>>31; 
+  y_sign = y_sign & 0x1;
+
   x_sign = x>>31;
+  x_sign = x_sign & 0x1;
   
   printf("0x%02X y sign\n", y_sign);
   printf("0x%02X x sign\n", x_sign);
   //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow 
-  int check = x+y; //see if overflow results 
+  int check = y+x; //see if overflow results 
+//does the total match the number 
 
+  (y_sign & x_sign) ^ check; //if not over flow if it is they are 
   printf("0x%02X check\n", check);
   int check_sign = check >>31; //get sign of the overflow to see if it matches
+  check_sign = check_sign & 0x1;
   printf("0x%02X check sign\n", check_sign);
 
   int same_or_not = (y_sign ^ x_sign); //1 if diff 0 if same checking if same or not was xor changd to reg or
@@ -334,6 +340,12 @@ int addOK(int x, int y) {
   int x_check =  (x_sign ^ check_sign);  //checking to see if different sign for x and sum
   
   //too many conditionals would need to be if same then else maybe use conditional from discusson?
+  //trying to implement a y check as well
+  int y_check  = y_sign ^ check_sign; //check to see if differnet sign for y and sum 
+
+  //int both_signs = y_check  x_check;
+
+//maybe need to 
 
 // i think that the error must be araising from x check, maybe in the cases where the signs r different it doesnt make sense to compare it to result sign
 
@@ -341,7 +353,7 @@ int addOK(int x, int y) {
 //i think i need 2 conditionals one for when signs are the same and other for when they are different
 //maybe something like
 //
-  return !(~x_check & same_or_not);
+  return (!((y_sign & x_sign) ^ check_sign) | same_or_not); //!(~both_signs & same_or_not);    (!(y_sign & x_sign) ^ check) | same_or_not
 
 //if check sign is 0 while other are 1 and 1 return false 
 
