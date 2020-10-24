@@ -326,7 +326,7 @@ int addOK(int x, int y) {
   int check = y+x; //see if overflow results 
 //does the total match the number 
 
-  (y_sign & x_sign) ^ check; //if not over flow if it is they are 
+  //(y_sign & x_sign) ^ check; //if not over flow if it is they are 
   printf("0x%02X check\n", check);
   int check_sign = check >>31; //get sign of the overflow to see if it matches
   check_sign = check_sign & 0x1;
@@ -334,14 +334,16 @@ int addOK(int x, int y) {
 
   int same_or_not = (y_sign ^ x_sign); //1 if diff 0 if same checking if same or not was xor changd to reg or
   printf("0x%02X same or not\n", same_or_not);
-
+  int testing_return = (!((y_sign & x_sign) ^ check_sign) | same_or_not); //using ! vs ~ greatly affects input
+  printf("0x%02X what is being returned\n", testing_return);
+  return testing_return;
   //need to use same or not to determine what to check 
 
-  int x_check =  (x_sign ^ check_sign);  //checking to see if different sign for x and sum
+  //int x_check =  (x_sign ^ check_sign);  //checking to see if different sign for x and sum
   
   //too many conditionals would need to be if same then else maybe use conditional from discusson?
   //trying to implement a y check as well
-  int y_check  = y_sign ^ check_sign; //check to see if differnet sign for y and sum 
+ // int y_check  = y_sign ^ check_sign; //check to see if differnet sign for y and sum 
 
   //int both_signs = y_check  x_check;
 
@@ -353,7 +355,7 @@ int addOK(int x, int y) {
 //i think i need 2 conditionals one for when signs are the same and other for when they are different
 //maybe something like
 //
-  return (!((y_sign & x_sign) ^ check_sign) | same_or_not); //!(~both_signs & same_or_not);    (!(y_sign & x_sign) ^ check) | same_or_not
+ // return (!((y_sign & x_sign) ^ check_sign) | same_or_not); //!(~both_signs & same_or_not);    (!(y_sign & x_sign) ^ check) | same_or_not
 
 //if check sign is 0 while other are 1 and 1 return false 
 
