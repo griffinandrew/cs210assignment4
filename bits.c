@@ -289,7 +289,12 @@ int isLess(int x, int y) {
   x_sign = x>>31;
   //compare signs
   int same_or_not = (y_sign ^ x_sign); //1 if diff 0 if same 
-  
+
+  int smaller_when_signs_same = (~x + y>>31); // first digit will be 1 if y smaller, o if x smaller
+
+  int equal = (same_or_not & when_signs_same);
+
+  int not_equal = 
   return 2;
 }
 /* 
