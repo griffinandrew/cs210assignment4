@@ -288,13 +288,18 @@ int isLess(int x, int y) {
   y_sign = y>>31; 
   x_sign = x>>31;
   //compare signs
+
+  printf("0x%02X y sign\n", y_sign);
+  printf("0x%02X x sign\n", x_sign);
   int same_or_not = (y_sign ^ x_sign); //1 if diff 0 if same 
 
-  int smaller_when_signs_same = (~x + y>>31); // first digit will be 1 if y smaller, o if x smaller
+  int smaller_when_signs_same = ((x + ~y)>>31); // first digit will be 1 if y smaller, o if x smaller
 
-  int equal = (same_or_not & when_signs_same);
+  printf("0x%02X smaller or not\n", smaller_when_signs_same);
+  int equal = (same_or_not & smaller_when_signs_same); //
+  printf("0x%02X equal\n", equal);
 
-  int not_equal = 
+  //int not_equal = 
   return 2;
 }
 /* 
