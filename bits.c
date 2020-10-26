@@ -261,16 +261,16 @@ int bitMask(int highbit, int lowbit) {
  // highbit = 1;
   //lowbit = 3; 
   int ones = ~0x0;
-  printf("%d high \n",highbit);
-  printf("%d low \n",lowbit);
+ // printf("%d high \n",highbit);
+ // printf("%d low \n",lowbit);
 
   int one_to_highbit = (2 << highbit) +ones;
   int one_tolowbit = (1<<lowbit)+ones;
 
-    printf("0x%02X ones to high\n", one_to_highbit);
-    printf("0x%02X ones to low\n", one_tolowbit);
+    //printf("0x%02X ones to high\n", one_to_highbit);
+    //printf("0x%02X ones to low\n", one_tolowbit);
   int y = one_to_highbit & ~one_tolowbit;
-  printf("0x%02X y\n", y);
+ // printf("0x%02X y\n", y);
   return y;
 
   //return 2;
@@ -290,28 +290,28 @@ int isLess(int x, int y) {
   x_sign = x>>31;
   x_sign = x_sign & 0x1;
   //compare signs
-  printf("0x%02X x sign\n", x_sign);
-  printf("0x%02X y sign\n", y_sign);
+//  printf("0x%02X x sign\n", x_sign);
+ // printf("0x%02X y sign\n", y_sign);
  
   int same_or_not = (y_sign ^ x_sign); //1 when signs same, 0 when different
 
   //1 if same 0 if different
-  printf("0x%02X sign same or not \n", same_or_not);
+//  printf("0x%02X sign same or not \n", same_or_not);
 
   int smaller_when_signs_same = ((x+(~(y)+1))>>31) &0x1; // first digit will be 1 if y smaller, 0 if x smaller, might need to reverse this later on
 //gives 1 if x<y, else 0 
 
 //problem is if they are eaual also get a one 
 
-  printf("0x%02X smaller or not\n", smaller_when_signs_same);
+ // printf("0x%02X smaller or not\n", smaller_when_signs_same);
   int equal = ((!(same_or_not)) & smaller_when_signs_same); //
-  printf("0x%02X equal\n", equal);
+//  printf("0x%02X equal\n", equal);
 
   int not_equal = (x_sign & !(y_sign));  // 1 if x < y
-  printf("0x%02X not equal \n", not_equal);
+//  printf("0x%02X not equal \n", not_equal);
   int checking_return = (not_equal | equal);
   //return (not_equal | equal);
-  printf("0x%02X return \n", checking_return);
+ // printf("0x%02X return \n", checking_return);
   return checking_return;
 }
 /* 
@@ -342,28 +342,28 @@ int addOK(int x, int y) {
   x_sign = x>>31;
   x_sign = x_sign & 0x1;
   
-  printf("0x%02X y sign\n", y_sign);
-  printf("0x%02X x sign\n", x_sign);
+  //printf("0x%02X y sign\n", y_sign);
+  //printf("0x%02X x sign\n", x_sign);
   //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow 
   int check = y+x; //see if overflow results 
 //does the total match the number 
 
   //(y_sign & x_sign) ^ check; //if not over flow if it is they are 
-  printf("0x%02X check\n", check);
+ // printf("0x%02X check\n", check);
   int check_sign = check >>31; //get sign of the overflow to see if it matches
-  check_sign = check_sign & 0x1;
-  printf("0x%02X check sign\n", check_sign);
+  check_sign = check_sign & 0x1; //msb of total
+  //printf("0x%02X check sign\n", check_sign);
 
   int same_or_not = (y_sign ^ x_sign); //1 if diff 0 if same checking if same or not was xor changd to reg or
-  printf("0x%02X same or not\n", same_or_not);
+ // printf("0x%02X same or not\n", same_or_not);
   int testing_return = (!((y_sign & x_sign) ^ check_sign) | same_or_not); //using ! vs ~ greatly affects input
-  printf("0x%02X what is being returned\n", testing_return);
+ // printf("0x%02X what is being returned\n", testing_return);
   
   
-  
+  return testing_return;
   
   //return testing_return;
-  return 2;
+  //return 2;
 
 
   //need to use same or not to determine what to check 
