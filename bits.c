@@ -294,14 +294,6 @@ int isLess(int x, int y) {
   printf("0x%02X y sign\n", y_sign);
  
   int same_or_not = (y_sign ^ x_sign); //1 when signs same, 0 when different
- 
-  //was using !
-  //gives 0 only when x>y , else 1 
-
-  //with noit gives 1 when different, 0 when same,
-//what one do we want tho
-  //should i be checking if same or if both are positive
-
 
   //1 if same 0 if different
   printf("0x%02X sign same or not \n", same_or_not);
@@ -408,13 +400,25 @@ int addOK(int x, int y) {
  *   Rating: 4
  */
 int bitCount(int x) {
-  int mask1 = 0x0001;
-  int mask2 = 0x0010;
-  int mask3 = 0x010;
-  int mask4 = 0x10
-  int counter = 0;
-  counter = x&mask1; //gives all 0's except last one 
-  
+  //counter = x&mask1; //gives all 0's except last one 
+  printf("0x%02X x\n", x);
+  int mask5 = 0x11; // this is 00010001, need 1 in end for 32 bits
+  printf("0x%02X mask\n", mask5); //things to do 
+  int mask6 = (mask5 | (0x11<<8)); //shifting by 8 gives 0000 1000 1 0000 0000 oring gives 1000100010001
+  printf("0x%02X mask6\n", mask6);
+  int mask7 = (mask6|(mask6<<16)); // this gives 1 =  000 1000 1000 1000 1000 1000 10001
+
+  printf("0x%02X mask 7\n", mask7);
+  int count = x&mask7; //0 positon
+  printf("0x%02X count\n", count);
+  count = count+((x>>1)&mask7); //copies from first postiton
+  printf("0x%02X count shift 1\n", count);
+  count = count+((x>>2)&mask7); //copies from second postiton
+  printf("0x%02X count shift 2\n", count);
+  count = count+((x>>3)&mask7); //copies from third postiton
+  printf("0x%02X count shift 3\n", count);
+  count = count>>8 + count>>16 + count;
+  printf("0x%02X total\n", count);
 
 
 
