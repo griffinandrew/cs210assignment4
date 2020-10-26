@@ -293,7 +293,12 @@ int isLess(int x, int y) {
   printf("0x%02X x sign\n", x_sign);
   printf("0x%02X y sign\n", y_sign);
  
-  int same_or_not = !(y_sign ^ x_sign); //gives 0 only when x>y , else 1 
+  int same_or_not = !(y_sign ^ x_sign); //1 when signs same, 0 when different
+  
+  //gives 0 only when x>y , else 1 
+
+  //with noit gives 1 when different, 0 when same,
+//what one do we want tho
   //should i be checking if same or if both are positive
 
 
@@ -301,14 +306,15 @@ int isLess(int x, int y) {
   printf("0x%02X sign same or not \n", same_or_not);
 
   int smaller_when_signs_same = (((y+(~x+1))>>31) &0x1); // first digit will be 1 if y smaller, 0 if x smaller, might need to reverse this later on
-//gives 1 if x<y 
+//gives 1 if x<y, else 0 
+
 //problem is if they are eaual also get a one 
 
   printf("0x%02X smaller or not\n", smaller_when_signs_same);
   int equal = (same_or_not & smaller_when_signs_same); //
   printf("0x%02X equal\n", equal);
 
-  int not_equal = (!x_sign & y_sign);  // 1 if x < y
+  int not_equal = (x_sign & !y_sign);  // 1 if x < y
   printf("0x%02X not equal \n", not_equal);
   int checking_return = (not_equal | equal);
   //return (not_equal | equal);
