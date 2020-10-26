@@ -293,8 +293,9 @@ int isLess(int x, int y) {
   printf("0x%02X x sign\n", x_sign);
   printf("0x%02X y sign\n", y_sign);
  
-  int same_or_not = !(y_sign ^ x_sign); //1 when signs same, 0 when different
-  
+  int same_or_not = (y_sign ^ x_sign); //1 when signs same, 0 when different
+ 
+  //was using !
   //gives 0 only when x>y , else 1 
 
   //with noit gives 1 when different, 0 when same,
@@ -305,16 +306,16 @@ int isLess(int x, int y) {
   //1 if same 0 if different
   printf("0x%02X sign same or not \n", same_or_not);
 
-  int smaller_when_signs_same = (((y+(~x+1))>>31) &0x1); // first digit will be 1 if y smaller, 0 if x smaller, might need to reverse this later on
+  int smaller_when_signs_same = ((x+(~(y)+1))>>31) &0x1; // first digit will be 1 if y smaller, 0 if x smaller, might need to reverse this later on
 //gives 1 if x<y, else 0 
 
 //problem is if they are eaual also get a one 
 
   printf("0x%02X smaller or not\n", smaller_when_signs_same);
-  int equal = (same_or_not & smaller_when_signs_same); //
+  int equal = ((!(same_or_not)) & smaller_when_signs_same); //
   printf("0x%02X equal\n", equal);
 
-  int not_equal = (x_sign & !y_sign);  // 1 if x < y
+  int not_equal = (x_sign & !(y_sign));  // 1 if x < y
   printf("0x%02X not equal \n", not_equal);
   int checking_return = (not_equal | equal);
   //return (not_equal | equal);
@@ -365,7 +366,14 @@ int addOK(int x, int y) {
   printf("0x%02X same or not\n", same_or_not);
   int testing_return = (!((y_sign & x_sign) ^ check_sign) | same_or_not); //using ! vs ~ greatly affects input
   printf("0x%02X what is being returned\n", testing_return);
-  return testing_return;
+  
+  
+  
+  
+  //return testing_return;
+  return 2;
+
+
   //need to use same or not to determine what to check 
 
   //int x_check =  (x_sign ^ check_sign);  //checking to see if different sign for x and sum
@@ -400,5 +408,17 @@ int addOK(int x, int y) {
  *   Rating: 4
  */
 int bitCount(int x) {
+  int mask1 = 0x0001;
+  int mask2 = 0x0010;
+  int mask3 = 0x010;
+  int mask4 = 0x10
+  int counter = 0;
+  counter = x&mask1; //gives all 0's except last one 
+  
+
+
+
+
+
   return 2;
 }
