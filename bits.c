@@ -293,22 +293,27 @@ int isLess(int x, int y) {
   printf("0x%02X x sign\n", x_sign);
   printf("0x%02X y sign\n", y_sign);
  
-  int same_or_not = !(y_sign ^ x_sign); //1 if diff 0 if same 
+  int same_or_not = !(y_sign ^ x_sign); //gives 0 only when x>y , else 1 
+  //should i be checking if same or if both are positive
 
-  int smaller_when_signs_same = !(((~x + y)>>31) &0x1); // first digit will be 1 if y smaller, 0 if x smaller, might need to reverse this later on
-//with not it is 0 when y smaller, 1 if x smaller
 
-//1 if y smaller 0 if x smaller
+  //1 if same 0 if different
+  printf("0x%02X sign same or not \n", same_or_not);
+
+  int smaller_when_signs_same = (((y+(~x+1))>>31) &0x1); // first digit will be 1 if y smaller, 0 if x smaller, might need to reverse this later on
+//gives 1 if x<y 
+//problem is if they are eaual also get a one 
+
   printf("0x%02X smaller or not\n", smaller_when_signs_same);
   int equal = (same_or_not & smaller_when_signs_same); //
   printf("0x%02X equal\n", equal);
 
-  int not_equal = (x_sign & !y_sign);  //gives 1 when the case is x is positive and y is neg, 1 when x is greater than y 
+  int not_equal = (!x_sign & y_sign);  // 1 if x < y
   printf("0x%02X not equal \n", not_equal);
-  //int checking_return = (not_equal | equal);
-  return (not_equal | equal);
- // printf("0x%02X return \n", checking_return);
-  //return checking_return;
+  int checking_return = (not_equal | equal);
+  //return (not_equal | equal);
+  printf("0x%02X return \n", checking_return);
+  return checking_return;
 }
 /* 
  * isNonNegative - return 1 if x >= 0, return 0 otherwise 
