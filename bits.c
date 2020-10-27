@@ -361,35 +361,7 @@ int addOK(int x, int y) {
   
   
   return testing_return;
-  
-  //return testing_return;
-  //return 2;
-
-
-  //need to use same or not to determine what to check 
-
-  //int x_check =  (x_sign ^ check_sign);  //checking to see if different sign for x and sum
-  
-  //too many conditionals would need to be if same then else maybe use conditional from discusson?
-  //trying to implement a y check as well
- // int y_check  = y_sign ^ check_sign; //check to see if differnet sign for y and sum 
-
-  //int both_signs = y_check  x_check;
-
-//maybe need to 
-
-// i think that the error must be araising from x check, maybe in the cases where the signs r different it doesnt make sense to compare it to result sign
-
-//^ im pretty sure this is the error when they are diffenent comparing it to the overflow one is a guessing game
-//i think i need 2 conditionals one for when signs are the same and other for when they are different
-//maybe something like
-//
- // return (!((y_sign & x_sign) ^ check_sign) | same_or_not); //!(~both_signs & same_or_not);    (!(y_sign & x_sign) ^ check) | same_or_not
-
-//if check sign is 0 while other are 1 and 1 return false 
-
-  
-  //return 2;
+ 
 }
 // Rating: 4
 /*
@@ -417,8 +389,10 @@ int bitCount(int x) {
   printf("0x%02X count shift 2\n", count);
   count = count+((x>>3)&mask7); //copies from third postiton
   printf("0x%02X count shift 3\n", count);
-  count = count>>8 + count>>16 + count;
+  count = (count>>8) + (count>>16) + count;
   printf("0x%02X total\n", count);
+
+  
 
 
 
