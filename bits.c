@@ -378,7 +378,9 @@ int bitCount(int x) {
   printf("0x%02X mask\n", mask5); //things to do 
   int mask6 = (mask5 | (0x11<<8)); //shifting by 8 gives 0000 1000 1 0000 0000 oring gives 1000100010001
   printf("0x%02X mask6\n", mask6);
-  int mask7 = (mask6|(mask6<<16)); // this gives 1 =  000 1000 1000 1000 1000 1000 10001
+  int mask7 = (mask6|(mask6<<16)); // this gives 	
+//0000 1000 1000 1000 1000 1000 1000 10001
+//     1000 1000 1000 1000 1000 1000 10001
 
   printf("0x%02X mask 7\n", mask7);
   int count = x&mask7; //0 positon
@@ -389,8 +391,14 @@ int bitCount(int x) {
   printf("0x%02X count shift 2\n", count);
   count = count+((x>>3)&mask7); //copies from third postiton
   printf("0x%02X count shift 3\n", count);
-  count = (count>>8) + (count>>16) + count;
-  printf("0x%02X total\n", count);
+  count = (count>>16) + count; //copies from first 4 to last 4
+   printf("0x%02X total\n", count);
+
+  int mask8 = 0xF; 
+  count = count&mask8 + (count>>3&mask8);
+  printf("0x%02X testing adding count\n", count);
+
+ 
 
   
 
