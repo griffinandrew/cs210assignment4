@@ -196,31 +196,13 @@ int tmax(void) {
  *  Rating: 2
  */
 int byteSwap(int x, int n, int m) {
- // x = 0xAABBCCDD;
-//  n = 3;
- // m = 0;
-  printf("0x%02X x\n", x);
-  printf("%x n\n", n);
-  printf("%x m\n", m);
   int t = n<<3; //shifting by bytes
   int j = m<<3;
-  printf("0x%02X og shift of n\n", t);
-  printf("0x%02X og shift of m \n", j);
-
   int first =  x & (0xFF<<t); //these should be just the corect values to swap 
   int second = x & (0xFF<<j); //all zeros but postion to swap
-  printf("0x%02X shifing to pos n\n", first);
-  printf("0x%02X shift to pos m\n", second);
-
-  //do i need to adjust for byte too?
   int n_iso = 0xFF & (first>>t); //getting the specific bit 
   int m_iso = 0xFF & (second>>j);
-  printf("0x%02X n iso\n", n_iso);
-  printf("0x%02X m iso\n", m_iso);
-
   //change m to n postion using shift (this is just shifting bits tho not bytes)
-  //int k = n_iso>>j; 
-  //int y = m_iso<<t;
   int k = n_iso<<t; 
   int y = m_iso<<j;
   int one_to_clean = k | y; //combines the 2 swapped one to insert onto old byte
@@ -228,20 +210,6 @@ int byteSwap(int x, int n, int m) {
   int newpos_1 = n_iso<<j; 
   int newpos_2 = m_iso<<t;
   int one_to_insert = newpos_1 | newpos_2;
-
-
-  printf("0x%02X others\n", others);
-  printf("0x%02X x \n", x);
-  printf("0x%02X onetoinsert\n", one_to_insert);
-  printf("0x%02X ~onetoinsert\n", ~one_to_insert);
-
- // x &= ~(x<<t | x<<j);  //clear bits
-  //clear bytes
-
-  //insert bytes
- // x |= one_to_insert; // or can I add them in?
- //x |= x + one_to_insert;
-
   return (others | one_to_insert);
 
     //return 2;
@@ -258,19 +226,10 @@ int byteSwap(int x, int n, int m) {
  *   Rating: 3
  */
 int bitMask(int highbit, int lowbit) {
- // highbit = 1;
-  //lowbit = 3; 
   int ones = ~0x0;
- // printf("%d high \n",highbit);
- // printf("%d low \n",lowbit);
-
   int one_to_highbit = (2 << highbit) +ones;
   int one_tolowbit = (1<<lowbit)+ones;
-
-    //printf("0x%02X ones to high\n", one_to_highbit);
-    //printf("0x%02X ones to low\n", one_tolowbit);
   int y = one_to_highbit & ~one_tolowbit;
- // printf("0x%02X y\n", y);
   return y;
 
   //return 2;
@@ -290,28 +249,13 @@ int isLess(int x, int y) {
   x_sign = x>>31;
   x_sign = x_sign & 0x1;
   //compare signs
-//  printf("0x%02X x sign\n", x_sign);
- // printf("0x%02X y sign\n", y_sign);
- 
   int same_or_not = (y_sign ^ x_sign); //1 when signs same, 0 when different
-
   //1 if same 0 if different
-//  printf("0x%02X sign same or not \n", same_or_not);
-
   int smaller_when_signs_same = ((x+(~(y)+1))>>31) &0x1; // first digit will be 1 if y smaller, 0 if x smaller, might need to reverse this later on
 //gives 1 if x<y, else 0 
-
-//problem is if they are eaual also get a one 
-
- // printf("0x%02X smaller or not\n", smaller_when_signs_same);
   int equal = ((!(same_or_not)) & smaller_when_signs_same); //
-//  printf("0x%02X equal\n", equal);
-
   int not_equal = (x_sign & !(y_sign));  // 1 if x < y
-//  printf("0x%02X not equal \n", not_equal);
   int checking_return = (not_equal | equal);
-  //return (not_equal | equal);
- // printf("0x%02X return \n", checking_return);
   return checking_return;
 }
 /* 
@@ -342,24 +286,13 @@ int addOK(int x, int y) {
   x_sign = x>>31;
   x_sign = x_sign & 0x1;
   
-  //printf("0x%02X y sign\n", y_sign);
-  //printf("0x%02X x sign\n", x_sign);
   //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow 
   int check = y+x; //see if overflow results 
 //does the total match the number 
-
-  //(y_sign & x_sign) ^ check; //if not over flow if it is they are 
- // printf("0x%02X check\n", check);
   int check_sign = check >>31; //get sign of the overflow to see if it matches
   check_sign = check_sign & 0x1; //msb of total
-  //printf("0x%02X check sign\n", check_sign);
-
   int same_or_not = (y_sign ^ x_sign); //1 if diff 0 if same checking if same or not was xor changd to reg or
- // printf("0x%02X same or not\n", same_or_not);
   int testing_return = (!((y_sign & x_sign) ^ check_sign) | same_or_not); //using ! vs ~ greatly affects input
- // printf("0x%02X what is being returned\n", testing_return);
-  
-  
   return testing_return;
  
 }
@@ -372,39 +305,16 @@ int addOK(int x, int y) {
  *   Rating: 4
  */
 int bitCount(int x) {
-  //counter = x&mask1; //gives all 0's except last one 
-  //printf("0x%02X x\n", x);
-  int mask5 = 0x11; // this is 00010001, need 1 in end for 32 bits
- // printf("0x%02X mask\n", mask5); //things to do 
-  int mask6 = (mask5 | (0x11<<8)); //shifting by 8 gives 0000 1000 1 0000 0000 oring gives 1000100010001
- // printf("0x%02X mask6\n", mask6);
-  int mask7 = (mask6|(mask6<<16)); // this gives 	
+  int mask = 0x11; // this is 00010001, need 1 in end for 32 bits
+  int mask2 = (mask | (0x11<<8)); //shifting by 8 gives 0000 1000 1 0000 0000 oring gives 1000100010001
+  int mask3 = (mask2|(mask2<<16)); // this lets me only need to shift by 4 each time
 //0000 1000 1000 1000 1000 1000 1000 10001
 //     1000 1000 1000 1000 1000 1000 10001
-
-//wait cant i just do mask 7 = 0x11111111
-  //int mask7 = 0x11111111; //this mask 
- // printf("0x%02X mask 7\n", mask7);
-  int count = x&mask7; //0 positon
- // printf("0x%02X count\n", count);
-  count += ((x>>1)&mask7); 
-  
-  //copies from first postiton
- // printf("0x%02X count shift 1\n", count);
-  count += ((x>>2)&mask7); //copies from second postiton
- // printf("0x%02X count shift 2\n", count);
-  count += ((x>>3)&mask7); //copies from third postiton
-//  printf("0x%02X count shift 3\n", count);
- // count += (count>>16); //copies from first 4 to last 4
-//  printf("0x%02X total\n", count);
-
-  int mask8 = 0xF; 
- // printf("0x%02X mask 8\n", mask8);
-  count = (count&mask8) + ((count>>4)&mask8) + ((count>>8)&mask8) + ((count>>12)&mask8) + ((count>>16)&mask8) + ((count>>20)&mask8) + ((count>>24)&mask8) + ((count>>28)&mask8); //this adds every other 4 bits together
-  //need last four bytes
-  //this is what i have
-
- // printf("0x%02X testing adding count\n", count);
-
-  return count;
+  int count = x&mask3; //0 positon
+  count += ((x>>1)&mask3); //copies from first postiton
+  count += ((x>>2)&mask3); //copies from second postiton
+  count += ((x>>3)&mask3); //copies from third postiton
+  int mask4 = 0xF; 
+  int sum = (count&mask4) + ((count>>4)&mask4) + ((count>>8)&mask4) + ((count>>12)&mask4) + ((count>>16)&mask4) + ((count>>20)&mask4) + ((count>>24)&mask4) + ((count>>28)&mask4); //this adds every other 4 bits together
+  return sum;
 }
