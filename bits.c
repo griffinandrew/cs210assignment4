@@ -402,11 +402,11 @@ int bitCount(int x) {
   //need to account for other part
   //this gives 111100001111
   printf("0x%02X mask 8\n", mask8);
-  count = (count&mask8) + ((count>>4)&mask8) + ((count>>8)&mask8) + ((count>>12)&mask8) + ((count>>16)&mask8) + ((count>>20)&mask8) + ((count>>24)&mask8) + ((count>>28)&mask8) + ((count>>32)&mask8); //this adds every other 4 bits together
+  count = (count&mask8) + ((count>>4)&mask8) + ((count>>8)&mask8) + ((count>>12)&mask8) + ((count>>16)&mask8) + ((count>>20)&mask8) + ((count>>24)&mask8) + ((count>>28)&mask8); //this adds every other 4 bits together
   //need last four bytes
   //this is what i have
 
   printf("0x%02X testing adding count\n", count);
 
-  return 2;
+  return count;
 }
