@@ -241,8 +241,8 @@ int bitMask(int highbit, int lowbit) {
  *   Rating: 3
  */
 int isLess(int x, int y) {
-  int y_sign, x_sign, signs_same, subtract, equal, not_equal; //first check signs
-  
+  int y_sign, x_sign, signs_same, subtract, equal, not_equal; //declare vars
+  //first check signs
   y_sign = y>>31; 
   y_sign = y_sign & 0x1;  //getting sign of y and cleaning it to ensure no other values
   x_sign = x>>31;
@@ -277,7 +277,7 @@ int isNonNegative(int x) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  int y_sign, x_sign, sum_sign, sum, signs_same;
+  int y_sign, x_sign, sum_sign, sum, signs_same; //declare vars
   //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow
   y_sign = y>>31; 
   y_sign = y_sign & 0x1; //getting sign of y and cleaning it to ensure no other values
@@ -302,12 +302,13 @@ int addOK(int x, int y) {
  *   Rating: 4
  */
 int bitCount(int x) {
-  int sum, mask4;
-  int mask = 0x11; // this is 00010001, need 1 in end for 32 bits
-  int mask2 = (mask | (0x11<<8)); //shifting by 8 expands 00001 for 16 bits but 32 is needed
-  int mask3 = (mask2|(mask2<<16)); // this allows me to only need to shift by 4 because it has 0001 repeating for 32 bits 
+  int sum,mask, mask4, count, mask2, mask3; //declare vars
   
-  int count = x&mask3; //check 0 positon copy into count
+  mask = 0x11; // this is 00010001, need 1 in end for 32 bits
+  mask2 = (mask | (0x11<<8)); //shifting by 8 expands 00001 for 16 bits but 32 is needed
+  mask3 = (mask2|(mask2<<16)); // this allows me to only need to shift by 4 because it has 0001 repeating for 32 bits 
+  
+  count = x&mask3; //check 0 positon copy into count
   count += ((x>>1)&mask3); //copies into count first postiton of all 4 bits
   count += ((x>>2)&mask3); //copies into count second postiton of all 4 bits
   count += ((x>>3)&mask3); //copies into count third postiton of all 4 bits
