@@ -196,16 +196,22 @@ int tmax(void) {
 int byteSwap(int x, int n, int m) {
   int n_to_bytes = n<<3; //shift for bytes
   int m_to_bytes = m<<3; //shift for bytes
+  
   int pos_n =  x & (0xFF<<n_to_bytes); // shift n appropriately for 8 byte value
   int pos_m = x & (0xFF<<m_to_bytes); // shift m appropriately for 8 byte value
+  
   int n_iso = 0xFF & (pos_n>>n_to_bytes); //isolate n
   int m_iso = 0xFF & (pos_m>>m_to_bytes); //isolate m
+  
   int swap_n = n_iso<<n_to_bytes; //swap position of n 
   int swap_m = m_iso<<m_to_bytes; //swap position of m
+  
   int one_to_clean = swap_n | swap_m; //combines the 2 swapped one to insert onto old byte
   int leftovers = x & ~one_to_clean; //getting the bytes that are not the ones to be swapped
+  
   int newpos_1 = n_iso<<m_to_bytes; //shift n to position that needed to be swapped with
   int newpos_2 = m_iso<<n_to_bytes; //shift n to position that needed to be swapped with
+  
   int one_to_insert = newpos_1 | newpos_2; //combine swapped postions for proper 
   return (leftovers | one_to_insert); //combines swapped positons with the ones that stay the same
 }
@@ -221,11 +227,11 @@ int byteSwap(int x, int n, int m) {
  *   Rating: 3
  */
 int bitMask(int highbit, int lowbit) {
-  int ones = ~0x0;
-  int one_to_highbit = (2 << highbit) +ones;
-  int one_tolowbit = (1<<lowbit)+ones;
-  int y = one_to_highbit & ~one_tolowbit;
-  return y;
+  int ones = ~0x0; //creates all ones 
+  int one_to_highbit = (2<<highbit)+ones; //shifts high bit to 2nd postion and puts all 1's to it 
+  int one_to_lowbit = (1<<lowbit)+ones; //shifts low bit to 1st postion and puts all 1's to it 
+  int mask = one_to_highbit & ~one_to_lowbit; //creates the appropraite mask
+  return mask;
 }
 /* 
  * isLess - if x < y  then return 1, else return 0 
@@ -236,14 +242,19 @@ int bitMask(int highbit, int lowbit) {
  */
 int isLess(int x, int y) {
   int y_sign, x_sign, signs_same, subtract, equal, not_equal; //first check signs
+  
   y_sign = y>>31; 
   y_sign = y_sign & 0x1;  //getting sign of y and cleaning it to ensure no other values
   x_sign = x>>31;
   x_sign = x_sign & 0x1; //getting sign of x and cleaning it to ensure no other values
+  
   signs_same = (y_sign ^ x_sign); //checks to see if signs are the same, 1 when signs same, 0 when different, 
+  
   subtract = ((x+(~(y)+1))>>31) &0x1; //this subtracts x from y and gets the first value; if x and y are both positive, y - x should be positive
+  
   equal = ((!(signs_same)) & subtract); //if signs are the same check to ensure sign of subtraction is the same
   not_equal = (x_sign & !(y_sign));   //if y is negative, x cannot be positive if x < y
+  
   return (not_equal | equal); //or together the two cases to get true or false
 }
 /* 
@@ -266,16 +277,19 @@ int isNonNegative(int x) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow
   int y_sign, x_sign, sum_sign, sum, signs_same;
+  //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow
   y_sign = y>>31; 
   y_sign = y_sign & 0x1; //getting sign of y and cleaning it to ensure no other values
   x_sign = x>>31;
   x_sign = x_sign & 0x1; //getting sign of x and cleaning it to ensure no other values 
+  
   sum = y+x; //see if overflow results 
   sum_sign = sum >>31; //get sign of the overflow to see if it matches
   sum_sign = sum_sign & 0x1; //msb of total
+  
   signs_same = (y_sign ^ x_sign); //checks if signs are same or not; 1 if diff 0 if same 
+  
   return (!((y_sign & x_sign) ^ sum_sign) | signs_same); //combines x and y sign with the sums sign to see if they match, if they are the same they should match; or together with signs same to ensure proper return value
  
 }
@@ -292,11 +306,13 @@ int bitCount(int x) {
   int mask = 0x11; // this is 00010001, need 1 in end for 32 bits
   int mask2 = (mask | (0x11<<8)); //shifting by 8 expands 00001 for 16 bits but 32 is needed
   int mask3 = (mask2|(mask2<<16)); // this allows me to only need to shift by 4 because it has 0001 repeating for 32 bits 
+  
   int count = x&mask3; //check 0 positon copy into count
   count += ((x>>1)&mask3); //copies into count first postiton of all 4 bits
   count += ((x>>2)&mask3); //copies into count second postiton of all 4 bits
   count += ((x>>3)&mask3); //copies into count third postiton of all 4 bits
+  
   mask4 = 0xF; //use all ones to keep values set 
   sum = (count&mask4) + ((count>>4)&mask4) + ((count>>8)&mask4) + ((count>>12)&mask4) + ((count>>16)&mask4) + ((count>>20)&mask4) + ((count>>24)&mask4) + ((count>>28)&mask4); //this adds every other 4 bits together
-  return sum;
+  return sum; 
 }
