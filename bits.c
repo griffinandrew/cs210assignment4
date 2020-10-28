@@ -374,16 +374,16 @@ int addOK(int x, int y) {
 int bitCount(int x) {
   //counter = x&mask1; //gives all 0's except last one 
   //printf("0x%02X x\n", x);
-  //int mask5 = 0x11; // this is 00010001, need 1 in end for 32 bits
+  int mask5 = 0x11; // this is 00010001, need 1 in end for 32 bits
  // printf("0x%02X mask\n", mask5); //things to do 
- // int mask6 = (mask5 | (0x11<<8)); //shifting by 8 gives 0000 1000 1 0000 0000 oring gives 1000100010001
+  int mask6 = (mask5 | (0x11<<8)); //shifting by 8 gives 0000 1000 1 0000 0000 oring gives 1000100010001
  // printf("0x%02X mask6\n", mask6);
- // int mask7 = (mask6|(mask6<<16)); // this gives 	
+  int mask7 = (mask6|(mask6<<16)); // this gives 	
 //0000 1000 1000 1000 1000 1000 1000 10001
 //     1000 1000 1000 1000 1000 1000 10001
 
 //wait cant i just do mask 7 = 0x11111111
-  int mask7 = 0x11111111; //this mask 
+  //int mask7 = 0x11111111; //this mask 
   printf("0x%02X mask 7\n", mask7);
   int count = x&mask7; //0 positon
   printf("0x%02X count\n", count);
@@ -391,18 +391,18 @@ int bitCount(int x) {
   
   //copies from first postiton
   printf("0x%02X count shift 1\n", count);
-  count = count+((x>>2)&mask7); //copies from second postiton
+  count += ((x>>2)&mask7); //copies from second postiton
   printf("0x%02X count shift 2\n", count);
-  count = count+((x>>3)&mask7); //copies from third postiton
+  count += ((x>>3)&mask7); //copies from third postiton
   printf("0x%02X count shift 3\n", count);
-  count = (count>>16) + count; //copies from first 4 to last 4
+  count += (count>>16); //copies from first 4 to last 4
   printf("0x%02X total\n", count);
 
-  int mask8 = 0xF0F; 
+  int mask8 = 0xF; 
   //need to account for other part
   //this gives 111100001111
   printf("0x%02X mask 8\n", mask8);
-  count = count&mask8 + ((count>>4)&mask8); //this adds every other 4 bits together
+  count = (count&mask8) + ((count>>4)&mask8) + ((count>>8)&mask8) + ((count>>12)&mask8) + ((count>>16)&mask8) + ((count>>20)&mask8) + ((count>>24)&mask8) + ((count>>28)&mask8) + ((count>>32)&mask8); //this adds every other 4 bits together
   //need last four bytes
   //this is what i have
 
