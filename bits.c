@@ -235,15 +235,15 @@ int bitMask(int highbit, int lowbit) {
  *   Rating: 3
  */
 int isLess(int x, int y) {
-  int y_sign, x_sign; //first check signs
+  int y_sign, x_sign, signs_same, subtract, equal, not_equal; //first check signs
   y_sign = y>>31; 
   y_sign = y_sign & 0x1;  //getting sign of y and cleaning it to ensure no other values
   x_sign = x>>31;
   x_sign = x_sign & 0x1; //getting sign of x and cleaning it to ensure no other values
-  int signs_same = (y_sign ^ x_sign); //checks to see if signs are the same, 1 when signs same, 0 when different, 
-  int subtract = ((x+(~(y)+1))>>31) &0x1; //this subtracts x from y and gets the first value; if x and y are both positive, y - x should be positive
-  int equal = ((!(signs_same)) & subtract); //if signs are the same check to ensure sign of subtraction is the same
-  int not_equal = (x_sign & !(y_sign));   //if y is negative, x cannot be positive if x < y
+  signs_same = (y_sign ^ x_sign); //checks to see if signs are the same, 1 when signs same, 0 when different, 
+  subtract = ((x+(~(y)+1))>>31) &0x1; //this subtracts x from y and gets the first value; if x and y are both positive, y - x should be positive
+  equal = ((!(signs_same)) & subtract); //if signs are the same check to ensure sign of subtraction is the same
+  not_equal = (x_sign & !(y_sign));   //if y is negative, x cannot be positive if x < y
   return (not_equal | equal); //or together the two cases to get true or false
 }
 /* 
@@ -267,15 +267,15 @@ int isNonNegative(int x) {
  */
 int addOK(int x, int y) {
   //get sign to check b/c we know if pos + pos = pos no overlfow and neg + neg = neg no overflow
-  int y_sign, x_sign;
+  int y_sign, x_sign, sum_sign, sum, signs_same;
   y_sign = y>>31; 
   y_sign = y_sign & 0x1; //getting sign of y and cleaning it to ensure no other values
   x_sign = x>>31;
   x_sign = x_sign & 0x1; //getting sign of x and cleaning it to ensure no other values 
-  int sum = y+x; //see if overflow results 
-  int sum_sign = sum >>31; //get sign of the overflow to see if it matches
+  sum = y+x; //see if overflow results 
+  sum_sign = sum >>31; //get sign of the overflow to see if it matches
   sum_sign = sum_sign & 0x1; //msb of total
-  int signs_same = (y_sign ^ x_sign); //checks if signs are same or not; 1 if diff 0 if same 
+  signs_same = (y_sign ^ x_sign); //checks if signs are same or not; 1 if diff 0 if same 
   return (!((y_sign & x_sign) ^ sum_sign) | signs_same); //combines x and y sign with the sums sign to see if they match, if they are the same they should match; or together with signs same to ensure proper return value
  
 }
@@ -288,6 +288,7 @@ int addOK(int x, int y) {
  *   Rating: 4
  */
 int bitCount(int x) {
+  int sum, mask4;
   int mask = 0x11; // this is 00010001, need 1 in end for 32 bits
   int mask2 = (mask | (0x11<<8)); //shifting by 8 expands 00001 for 16 bits but 32 is needed
   int mask3 = (mask2|(mask2<<16)); // this allows me to only need to shift by 4 because it has 0001 repeating for 32 bits 
@@ -295,7 +296,7 @@ int bitCount(int x) {
   count += ((x>>1)&mask3); //copies into count first postiton of all 4 bits
   count += ((x>>2)&mask3); //copies into count second postiton of all 4 bits
   count += ((x>>3)&mask3); //copies into count third postiton of all 4 bits
-  int mask4 = 0xF; //use all ones to keep values set 
-  int sum = (count&mask4) + ((count>>4)&mask4) + ((count>>8)&mask4) + ((count>>12)&mask4) + ((count>>16)&mask4) + ((count>>20)&mask4) + ((count>>24)&mask4) + ((count>>28)&mask4); //this adds every other 4 bits together
+  mask4 = 0xF; //use all ones to keep values set 
+  sum = (count&mask4) + ((count>>4)&mask4) + ((count>>8)&mask4) + ((count>>12)&mask4) + ((count>>16)&mask4) + ((count>>20)&mask4) + ((count>>24)&mask4) + ((count>>28)&mask4); //this adds every other 4 bits together
   return sum;
 }
